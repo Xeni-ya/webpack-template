@@ -110,3 +110,64 @@ new HtmlWebpackPlugin({
 template: "./src/index.html"
 })],
 ---> npm run dev
+
+7. Настройка компиляции стилей. Sass-loader, post-css-loader, css-loader, style-loader, MiniCssExtractPlugin.
+
+---> src/style.css
+
+---> создаем стили:
+https://webpack.js.org/loaders/style-loader/
+https://webpack.js.org/loaders/css-loader/
+https://webpack.js.org/loaders/postcss-loader/
+https://www.npmjs.com/package/postcss-preset-env
+https://webpack.js.org/loaders/sass-loader/
+https://webpack.js.org/plugins/mini-css-extract-plugin/
+и подключаем плагины:
+npm i style-loader css-loader postcss-loader postcss postcss-preset-env sass-loader sass mini-css-extract-plugin --save-dev
+
+---> в webpack.config.js:
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+
+plugins: [new MiniCssExtractPlugin()],
+
+    rules: [
+      {
+        test: /\.(sa|sc|c)ss$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          "css-loader",
+          {
+            loader: "postcss-loader",
+            options: {
+              postcssOptions: {
+                plugins: [
+                  [
+                    "postcss-preset-env",
+                    {
+                      // Options
+                    },
+                  ],
+                ],
+              },
+            },
+          },
+          "sass-loader"
+        ],
+      },
+    ]
+
+---> импортируем стили в index.js
+---> import './styles.css';
+
+// Вместо:
+// import './styles.css';
+
+// Используйте:
+require('./styles.css');
+
+---> делаем сборку npm run dev
+
+---> добавим условие: use: [
+(mode === 'development') ? "style-loader" : MiniCssExtractPlugin.loader, ...]
+
+---> npm start

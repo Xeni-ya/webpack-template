@@ -1,3 +1,5 @@
+require('./styles.css');
+
 const userStack = {
   language: 'js',
   framework: 'angular'
