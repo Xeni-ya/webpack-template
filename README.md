@@ -48,6 +48,65 @@ https://www.npmjs.com/package/webpack-dev-server
 
 3. Настройка переменной окружения
 
-настроим переменную окружения
+в package.json пишем "start": "set NODE_ENV=development&&webpack serve --open",
+
+---> настроим переменную окружения:
 npm install --save-dev cross-env
 https://www.npmjs.com/package/cross-env
+
+---> далее "dev": "set NODE_ENV=development&&webpack",
+"build": "set NODE_ENV=production&&webpack",
+
+4. Создание файла конфигурации webpack.config.js
+
+Настраиваем webpack:
+создаем webpack.config.js в корне проекта
+https://webpack.js.org/configuration/
+
+5. Задание режима разработки через свойство mode
+
+---> в webpack.config.js пишем:
+let mode = 'development';
+if (process.env.NODE_ENV === 'production') {
+mode = 'production';
+}
+console.log(mode + 'mode')
+
+module.exports = {
+mode: mode,//настраиваем режим сборки, код выше
+}
+---> npm run dev
+---> npm run build
+
+---> добавляем опции: plugins module rules
+
+module.exports = {
+mode: mode,//настраиваем режим сборки, код выше
+plugins: [],
+module: {
+rules: []
+},
+}
+
+6. Настройка компиляции html. HtmlWebpackPlugin
+
+---> src/index.html
+
+<body>
+  <div class="container">
+    <h1>Hello Webpack</h1>
+  </div>
+</body>
+
+---> устанавливаем HTML вебпак плагин:
+npm i --save-dev html-webpack-plugin
+https://www.npmjs.com/package/html-webpack-plugin
+
+---> в webpack.config.js
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+и пишем:
+plugins: [
+new HtmlWebpackPlugin({
+template: "./src/index.html"
+})],
+---> npm run dev
