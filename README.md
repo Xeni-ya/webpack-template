@@ -260,3 +260,11 @@ loader: "html-loader",
 
 ---> npm run start
 ---> npm run build
+
+11. Очистка папки dist
+
+output: {
+assetModuleFlame: "assets/[hash][query]",
+clean: true, ---> добавляем
+},
+---> npm run build

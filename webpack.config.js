@@ -12,6 +12,7 @@ module.exports = {
   mode: mode,//настраиваем режим сборки, код выше
   output: {
     assetModuleFilename: "assets/[hash][query]",
+    clean: true,
   },
   plugins: [
     new MiniCssExtractPlugin({
