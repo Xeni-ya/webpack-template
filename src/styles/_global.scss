@@ -8,5 +8,8 @@ h1 {
 .contsiner {
   &__subtitle {
     color: $seconddaryColor;
+    display: block;
+    height: 140px;
+    background: url("../images/gradient-beautiful-background.jpg");
   }
 }

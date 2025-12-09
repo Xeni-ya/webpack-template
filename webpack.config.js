@@ -10,6 +10,9 @@ console.log(mode + 'mode')
 
 module.exports = {
   mode: mode,//настраиваем режим сборки, код выше
+  output: {
+    assetModuleFilename: "assets/[hash][query]",
+  },
   plugins: [
     new MiniCssExtractPlugin({
       filename: '[name].[contenthash].css'
@@ -19,6 +22,10 @@ module.exports = {
     })],
   module: {
     rules: [
+      {
+        test: /\.html$/i,
+        loader: "html-loader",
+      },
       {
         test: /\.(sa|sc|c)ss$/,
         use: [
@@ -41,6 +48,10 @@ module.exports = {
           },
           "sass-loader"
         ],
+      },
+      {
+        test: /\.(png|svg|jpg|jpeg|gif|webp|ico)$/i,
+        type: 'asset/resource',
       },
     ]
   },

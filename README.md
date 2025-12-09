@@ -214,3 +214,49 @@ filename: '[name].[contenthash].css'
 ]
 
 ---> сбираем проект в режиме продакшн (npm run build)
+
+10. Настройка компиляции изображений
+
+---> в webpack.config.js:
+rules: [
+{
+test: /\.(sa|sc|c)ss$/,
+      use: [...]
+    }
+    {
+      test: /\.(png|jpg|jpeg|gif|svg|webp|ico)$/i,
+type: 'asset/resource',
+},
+]
+---> npm run start (запускаем сервер) - npm run build (запускаем в продакшн режиме)
+
+---> в webpack.config.js:
+module.exports = {
+mode: mode,
+output: {
+assetModuleFilename: "assets/[hash][query]",
+},
+...
+}
+
+---> npm run build
+
+---> добавляем еще картинку
+---> npm install --save-dev html-loader
+
+---> добавляем в правила:
+module.exports = {
+module: {
+rules: [
+{
+test: /\.html$/i,
+loader: "html-loader",
+},
+],
+},
+};
+
+---> в добавляем изображение
+
+---> npm run start
+---> npm run build
