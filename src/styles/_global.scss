@@ -1,0 +1,12 @@
+$primaryColor: chocolate;
+$seconddaryColor: dimgray;
+
+h1 {
+  color: $primaryColor;
+}
+
+.contsiner {
+  &__subtitle {
+    color: $seconddaryColor;
+  }
+}

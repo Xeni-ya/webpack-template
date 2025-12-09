@@ -1,4 +1,4 @@
-require('./styles.css');
+require('./styles/index.scss');
 
 const userStack = {
   language: 'js',

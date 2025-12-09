@@ -171,3 +171,32 @@ require('./styles.css');
 (mode === 'development') ? "style-loader" : MiniCssExtractPlugin.loader, ...]
 
 ---> npm start
+
+8.  SASS, SCSS.Настройка компиляции файлов препроцессоров
+
+---> оздадим src/styles/index.scss и src/styles/\_global.scss
+
+--> в \_global.scss:
+
+$primaryColor: chocolate;
+$seconddaryColor: dimgray;
+
+h1 {
+color: $primaryColor;
+}
+
+.contsiner {
+&\_\_subtitle {
+color: $seconddaryColor;
+}
+}
+
+---> в index.scss:
+@use 'global';
+
+---> в index.js импортируем главный файл прероцессеров:
+require('./styles/index.scss');
+
+---> style.css - удаляем
+
+---> npm start
