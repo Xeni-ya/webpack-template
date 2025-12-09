@@ -200,3 +200,17 @@ require('./styles/index.scss');
 ---> style.css - удаляем
 
 ---> npm start
+
+9. Настройка кеширования css файлов
+
+---> в webpack.config.js:
+
+plugins: [
+//require('postcss-preset-env')(),
+new MiniCssExtractPlugin({
+filename: '[name].[contenthash].css'
+}),
+...
+]
+
+---> сбираем проект в режиме продакшн (npm run build)
