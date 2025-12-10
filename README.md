@@ -292,3 +292,41 @@ test: /\.(woff|woff2|eot|ttf|otf)$/i,
 type: 'asset/resource',
 },
 ]
+
+13. Подключение шаблонизатора
+
+---> подключаем плагин:
+npm install pug pug-loader --save-dev
+
+---> src/index.pug
+
+---> конвертируем html-код в pug и добавляем его в файл index.pug
+
+---> удаляем index.html
+
+---> создаем папку pug/libs
+
+---> в libs создаем 2 файла: \_image.pug \_libs.pug
+
+---> в pug создаем файл \_head.pug и перенозсим в него код
+
+---> в index.pug подключаем код head: include pug/\_head.pug
+
+---> в \_image.pug создаем миксин для вставки изображения:
+mixin image(name)
+img.src(src="./images/zhivotnye_kot.jpg", alt="zhivotnye kot")
+
+---> подключаем изображение в качестве библиотеки include pug/libs/\_libs в файл index.pug
+
+---> в webpack.config.js:
+{
+test: /\.pug$/,
+loader: 'pug-loader',
+exclude: /(node_modules|bower_components)/,
+},
+---> меняем html на pug
+new HtmlWebpackPlugin({
+template: "./src/index.pug"
+}),
+
+---> npm run start (запускаем сервер)

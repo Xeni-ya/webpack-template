@@ -30,6 +30,8 @@
     "postcss": "^8.5.6",
     "postcss-loader": "^8.2.0",
     "postcss-preset-env": "^10.5.0",
+    "pug": "^2.0.4",
+    "pug-loader": "^2.4.0",
     "sass": "^1.94.2",
     "sass-loader": "^16.0.6",
     "style-loader": "^4.0.0",
