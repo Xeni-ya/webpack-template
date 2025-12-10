@@ -268,3 +268,27 @@ assetModuleFlame: "assets/[hash][query]",
 clean: true, ---> добавляем
 },
 ---> npm run build
+
+12. Подключение шрифтов
+
+---> src/fonts/...
+
+---> styles/\_fonts.scss/
+
+---> в \_fonts.scss добавляем @font-face {...}
+
+---> в index.scss:
+@use 'fonts';
+
+---> в \_global.scss добавляем шрифт:
+html {
+font-family: ;
+}
+
+---> в webpack.config.js добавляем регулярное выражение:
+rules: [
+{
+test: /\.(woff|woff2|eot|ttf|otf)$/i,
+type: 'asset/resource',
+},
+]

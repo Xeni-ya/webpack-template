@@ -1,6 +1,10 @@
 $primaryColor: chocolate;
 $seconddaryColor: dimgray;
 
+html {
+  font-family: "Prompt", sans-serif;
+}
+
 h1 {
   color: $primaryColor;
 }
