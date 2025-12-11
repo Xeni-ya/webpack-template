@@ -390,3 +390,14 @@ filename: '[name].[contenthash].js'
 },
 
 ---> собираем проект npm run build
+
+15. DEV-TOOL. Настройка исходных карт
+
+---> добавляем devtool в module.exports = {
+mode: mode,//настраиваем режим сборки, код выше
+target: 'web',
+output: {...},
+devtool: 'source-map',
+}
+
+---> перезапускаем проект npm run start
