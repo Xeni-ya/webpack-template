@@ -1,4 +1,5 @@
 require('./styles/index.scss');
+const $ = require("jquery");
 
 const userStack = {
   language: 'js',
@@ -10,5 +11,7 @@ const user = {
   age: '20',
   ...userStack
 }
+
+$('.block').html('jQuery is working');
 
 console.log(user)

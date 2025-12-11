@@ -401,3 +401,17 @@ devtool: 'source-map',
 }
 
 ---> перезапускаем проект npm run start
+
+16. jQuery. Подключение библиотеки
+
+---> npm i jquery
+
+---> пишем в index.js:
+import $ from "jquery";
+const $ = require("jquery"); // ← измените import на require
+
+$('.block').html('jQuery is working');
+
+в index.pug: .block
+
+---> npm run start
