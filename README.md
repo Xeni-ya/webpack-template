@@ -314,9 +314,10 @@ npm install pug pug-loader --save-dev
 
 ---> в \_image.pug создаем миксин для вставки изображения:
 mixin image(name)
-img.src(src="./images/zhivotnye_kot.jpg", alt="zhivotnye kot")
+img.src(src=`../src/images/${name}.jpg` alt=name)
 
----> подключаем изображение в качестве библиотеки include pug/libs/\_libs в файл index.pug
+---> подключаем изображение в качестве библиотеки include pug/libs/\_libs в файл index.pug и добавляем код:
++image('zhivotnye_kot')
 
 ---> в webpack.config.js:
 {
@@ -324,9 +325,68 @@ test: /\.pug$/,
 loader: 'pug-loader',
 exclude: /(node_modules|bower_components)/,
 },
+
 ---> меняем html на pug
 new HtmlWebpackPlugin({
 template: "./src/index.pug"
 }),
 
 ---> npm run start (запускаем сервер)
+
+14. Обработка JS
+
+https://webpack.js.org/loaders/babel-loader/
+---> npm install babel-loader @babel/core @babel/preset-env --save-dev
+
+---> module: {
+rules: [
+{
+test: /\.(?:js|mjs|cjs)$/,
+exclude: /node_modules/,
+use: {
+loader: 'babel-loader',
+options: {
+targets: "defaults",
+presets: [
+['@babel/preset-env']
+]
+}
+}
+}
+]
+}
+
+---> компилируем проект npm r
+
+---> в package.json вставим: который может подстраивать наш код под нужные браузеры
+"browserslist": [
+"defaults",
+"IE 10",
+"maintained node versions"
+],
+
+--> в \_global.scss добавим стили:
+&\_\_subtitle {
+...
+display: flex;
+justify-content: center;
+}
+
+---> npm run start (запускаем сборку)
+
+Добавьте target в webpack.config.js:
+module.exports = {
+mode: mode,
+target: 'web', // ← ДОБАВЬТЕ ЭТУ СТРОКУ
+entry: './src/index.js',
+output: {
+// ... ваш текущий output
+},
+// ... остальные настройки
+}
+
+---> output: {
+filename: '[name].[contenthash].js'
+},
+
+---> собираем проект npm run build

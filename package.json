@@ -9,6 +9,11 @@
     "dev": "set NODE_ENV=development&&webpack",
     "build": "set NODE_ENV=production&&webpack"
   },
+  "browserslist": [
+    "defaults",
+    "IE 10",
+    "maintained node versions"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Xeni-ya/webpack-template.git"
@@ -22,6 +27,9 @@
   },
   "homepage": "https://github.com/Xeni-ya/webpack-template#readme",
   "devDependencies": {
+    "@babel/core": "^7.28.5",
+    "@babel/preset-env": "^7.28.5",
+    "babel-loader": "^10.0.0",
     "cross-env": "^10.1.0",
     "css-loader": "^7.1.2",
     "html-loader": "^5.1.0",

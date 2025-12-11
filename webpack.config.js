@@ -10,7 +10,9 @@ console.log(mode + 'mode')
 
 module.exports = {
   mode: mode,//настраиваем режим сборки, код выше
+  target: 'web',
   output: {
+    filename: '[name].[contenthash].js',
     assetModuleFilename: "assets/[hash][query]",
     clean: true,
   },
@@ -63,6 +65,19 @@ module.exports = {
         loader: 'pug-loader',
         exclude: /(node_modules|bower_components)/,
       },
+      {
+        test: /\.(?:js|mjs|cjs)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            targets: "defaults",
+            presets: [
+              ['@babel/preset-env']
+            ]
+          }
+        }
+      }
     ]
   },
 }
