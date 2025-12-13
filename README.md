@@ -408,10 +408,28 @@ devtool: 'source-map',
 
 ---> пишем в index.js:
 import $ from "jquery";
-const $ = require("jquery"); // ← измените import на require
+(const $ = require("jquery"); // ← измените import на require)
 
+---> в index.pug добавляем див с классом: .block
+
+---> пишем в index.js:
 $('.block').html('jQuery is working');
 
-в index.pug: .block
+---> npm run start
+
+17. Bootstrap. Подключение библиотеки
+
+---> npm i bootstrap
+
+---> устанавливаем
+npm i @popperjs/core
+
+---> импортируем в index.js:
+@import 'bootstrap';
+
+---> в index.scss:
+@import "~bootstrap/scss/bootstrap";
+
+---> в index.pug добавляем элемент бутстрапа
 
 ---> npm run start

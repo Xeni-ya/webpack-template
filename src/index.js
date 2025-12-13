@@ -1,5 +1,6 @@
 require('./styles/index.scss');
 const $ = require("jquery");
+require('bootstrap');
 
 const userStack = {
   language: 'js',
