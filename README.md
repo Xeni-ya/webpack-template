@@ -433,3 +433,28 @@ npm i @popperjs/core
 ---> в index.pug добавляем элемент бутстрапа
 
 ---> npm run start
+
+18. ENTRY POINTS. Импорт нескольких файлов
+
+---> в index.pug добавляем див с классом: .user
+
+---> добавляем файл в папку src/user.js
+
+---> src/user.js добавляем следующий код:
+import $ from "jquery";
+
+$('.user').html('User is working');
+
+---> в webpack.config.js добавим entry:
+module.exports = {
+mode: mode,
+entry: {
+scripts: './src/index.js',
+user: './src/user.js',
+},
+...
+}
+
+---> собираем проект: npm run build
+
+1.  OPTIMIZATION. Разделение файлов

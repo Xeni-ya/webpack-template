@@ -10,6 +10,10 @@ console.log(mode + 'mode')
 
 module.exports = {
   mode: mode,//настраиваем режим сборки, код выше
+  entry: {
+    scripts: './src/index.js',
+    user: './src/user.js',
+  },
   target: 'web',
   output: {
     filename: '[name].[contenthash].js',
