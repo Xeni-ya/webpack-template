@@ -457,4 +457,15 @@ user: './src/user.js',
 
 ---> собираем проект: npm run build
 
-1.  OPTIMIZATION. Разделение файлов
+19. Оптимизация. Разделение файлов
+
+---> в webpack.config.js добавим optimization:
+devtool: 'source-map',
+optimization: {
+splitChunks: {
+chunks: 'all',
+},
+},
+plugins: [...]
+
+---> собираем проект: npm run build

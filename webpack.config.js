@@ -1,7 +1,11 @@
+// подключили плагины
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const { split } = require('postcss/lib/list');
 const { default: postcss } = require('postcss/lib/postcss');
+const { SplitChunksPlugin, Chunk } = require('webpack');
 
+// меняем ражим с development на production
 let mode = 'development';
 if (process.env.NODE_ENV === 'production') {
   mode = 'production';
@@ -9,19 +13,24 @@ if (process.env.NODE_ENV === 'production') {
 console.log(mode + 'mode')
 
 module.exports = {
-  mode: mode,//настраиваем режим сборки, код выше
-  entry: {
+  mode: mode, // объект конфигураций
+  target: 'web',
+  entry: { // входные точки
     scripts: './src/index.js',
     user: './src/user.js',
   },
-  target: 'web',
-  output: {
+  output: { //выходные точки
     filename: '[name].[contenthash].js',
     assetModuleFilename: "assets/[hash][query]",
     clean: true,
   },
-  devtool: 'source-map',
-  plugins: [
+  devtool: 'source-map', // исходные карты
+  optimization: { // дробление файлов
+    splitChunks: {
+      chunks: 'all',
+    },
+  },
+  plugins: [ // подключили плагины
     new MiniCssExtractPlugin({
       filename: '[name].[contenthash].css'
     }),
@@ -29,7 +38,7 @@ module.exports = {
       template: "./src/index.pug"
     })],
   module: {
-    rules: [
+    rules: [ // указали все loader
       {
         test: /\.html$/i,
         loader: "html-loader",
