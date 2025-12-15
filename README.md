@@ -1,19 +1,22 @@
-# webpack-template
+# Configuring Webpack 5
 
-Настройка Webpack 5
+### 1. Иноциализация проекта
 
-1. Иноциализация проекта
+---
 
-npm init --yes
+`npm init --yes`
 
-npm install webpack webpack-cli --save-dev
+---> `npm install webpack webpack-cli --save-dev`
 (npm install webpack --save-dev // устанавливает webpack, a npm i webpack-cli --save-dev //то, что поможет нам настраивать вебпакт прямо в тапочках из терминала)
 
-добавляем файл .gitignore в него записываем сразу две строки
+---> добавляем файл .gitignore в него записываем сразу две строки
 /node_modules
 /dist
 
-структура проекта - создаем папку src/index.js ---> пишем произвольный код:
+структура проекта:
+---> создаем папку src/index.js ---> пишем произвольный код:
+
+```
 const userStack = {
 language: 'js',
 framework: 'angular'
@@ -26,11 +29,15 @@ age: '20',
 }
 
 console.log(user)
+```
 
-npm run build //появляется папка dist
+---> `npm run build` // появляется папка dist
 
-2. Настраиваем сборку в package.json
+### 2. Настраиваем сборку в package.json
 
+---
+
+```
 "scripts": {
 "test": "echo \"Error: no test specified\" && exit 1",
 
@@ -38,34 +45,44 @@ npm run build //появляется папка dist
 "dev": "webpack", // компелирует не оптимизированные файлы
 "build": "webpack" // оптимизированные файли в паппке dist
 },
+```
 
 вебпак собирает модули, а для этого нам нужно установить локальный сервер, это тоже пакет (он же утилита)
 
-npm i webpack-dev-server --save-dev
+---> `npm i webpack-dev-server --save-dev`
 https://www.npmjs.com/package/webpack-dev-server
+
 ---> прописываем флаг -- open ("start": "webpack serve --open",)
----> npm run start
 
-3. Настройка переменной окружения
+---> `npm run start`
 
-в package.json пишем "start": "set NODE_ENV=development&&webpack serve --open",
+### 3. Настройка переменной окружения
+
+---
+
+---> в package.json пишем `"start": "set NODE_ENV=development&&webpack serve --open",`
 
 ---> настроим переменную окружения:
-npm install --save-dev cross-env
+`npm install --save-dev cross-env`
 https://www.npmjs.com/package/cross-env
 
----> далее "dev": "set NODE_ENV=development&&webpack",
-"build": "set NODE_ENV=production&&webpack",
+---> далее `"dev": "set NODE_ENV=development&&webpack",`
+`"build": "set NODE_ENV=production&&webpack",`
 
-4. Создание файла конфигурации webpack.config.js
+### 4. Создание файла конфигурации webpack.config.js
+
+---
 
 Настраиваем webpack:
-создаем webpack.config.js в корне проекта
+
+`создаем webpack.config.js` в корне проекта
 https://webpack.js.org/configuration/
 
-5. Задание режима разработки через свойство mode
+### 5. Задание режима разработки через свойство mode
 
 ---> в webpack.config.js пишем:
+
+```
 let mode = 'development';
 if (process.env.NODE_ENV === 'production') {
 mode = 'production';
@@ -75,11 +92,15 @@ console.log(mode + 'mode')
 module.exports = {
 mode: mode,//настраиваем режим сборки, код выше
 }
----> npm run dev
----> npm run build
+```
 
----> добавляем опции: plugins module rules
+---> `npm run dev`
 
+---> `npm run build`
+
+---> добавляем опции: `plugins, module, rules`
+
+```
 module.exports = {
 mode: mode,//настраиваем режим сборки, код выше
 plugins: [],
@@ -87,45 +108,62 @@ module: {
 rules: []
 },
 }
+```
 
-6. Настройка компиляции html. HtmlWebpackPlugin
+### 6. Настройка компиляции html. HtmlWebpackPlugin
 
----> src/index.html
+---
 
+---> `src/index.html`
+
+```
 <body>
   <div class="container">
     <h1>Hello Webpack</h1>
   </div>
 </body>
+```
 
 ---> устанавливаем HTML вебпак плагин:
-npm i --save-dev html-webpack-plugin
+`npm i --save-dev html-webpack-plugin`
 https://www.npmjs.com/package/html-webpack-plugin
 
 ---> в webpack.config.js
+
+```
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 и пишем:
 plugins: [
 new HtmlWebpackPlugin({
 template: "./src/index.html"
 })],
----> npm run dev
+```
 
-7. Настройка компиляции стилей. Sass-loader, post-css-loader, css-loader, style-loader, MiniCssExtractPlugin.
+---> `npm run dev`
 
----> src/style.css
+### 7. Настройка компиляции стилей. Sass-loader, post-css-loader, css-loader, style-loader, MiniCssExtractPlugin.
+
+---
+
+---> `src/style.css`
 
 ---> создаем стили:
+
+```
 https://webpack.js.org/loaders/style-loader/
 https://webpack.js.org/loaders/css-loader/
 https://webpack.js.org/loaders/postcss-loader/
 https://www.npmjs.com/package/postcss-preset-env
 https://webpack.js.org/loaders/sass-loader/
 https://webpack.js.org/plugins/mini-css-extract-plugin/
+```
+
 и подключаем плагины:
-npm i style-loader css-loader postcss-loader postcss postcss-preset-env sass-loader sass mini-css-extract-plugin --save-dev
+`npm i style-loader css-loader postcss-loader postcss postcss-preset-env sass-loader sass mini-css-extract-plugin --save-dev`
 
 ---> в webpack.config.js:
+
+```
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 plugins: [new MiniCssExtractPlugin()],
@@ -155,29 +193,37 @@ plugins: [new MiniCssExtractPlugin()],
         ],
       },
     ]
+```
 
 ---> импортируем стили в index.js
----> import './styles.css';
+---> `import './styles.css';`
 
-// Вместо:
-// import './styles.css';
+> Вместо:
+> import './styles.css';
+>
+> Используйте:
+> require('./styles.css');
 
-// Используйте:
-require('./styles.css');
+---> делаем сборку `npm run dev`
 
----> делаем сборку npm run dev
+---> добавим условие:
 
----> добавим условие: use: [
+```
+use: [
 (mode === 'development') ? "style-loader" : MiniCssExtractPlugin.loader, ...]
+```
 
----> npm start
+---> `npm start`
 
-8.  SASS, SCSS.Настройка компиляции файлов препроцессоров
+### 8. SASS, SCSS.Настройка компиляции файлов препроцессоров
 
----> оздадим src/styles/index.scss и src/styles/\_global.scss
+---
+
+---> оздадим `src/styles/index.scss и src/styles/_global.scss`
 
 --> в \_global.scss:
 
+```
 $primaryColor: chocolate;
 $seconddaryColor: dimgray;
 
@@ -188,23 +234,27 @@ color: $primaryColor;
 .contsiner {
 &\_\_subtitle {
 color: $seconddaryColor;
+  }
 }
-}
+```
 
 ---> в index.scss:
-@use 'global';
+`@use 'global';`
 
 ---> в index.js импортируем главный файл прероцессеров:
-require('./styles/index.scss');
+`require('./styles/index.scss');`
 
 ---> style.css - удаляем
 
----> npm start
+---> `npm start`
 
-9. Настройка кеширования css файлов
+### 9. Настройка кеширования css файлов
+
+---
 
 ---> в webpack.config.js:
 
+```
 plugins: [
 //require('postcss-preset-env')(),
 new MiniCssExtractPlugin({
@@ -212,12 +262,17 @@ filename: '[name].[contenthash].css'
 }),
 ...
 ]
+```
 
----> сбираем проект в режиме продакшн (npm run build)
+---> сбираем проект в режиме продакшн `npm run build`
 
-10. Настройка компиляции изображений
+### 10. Настройка компиляции изображений
+
+---
 
 ---> в webpack.config.js:
+
+```
 rules: [
 {
 test: /\.(sa|sc|c)ss$/,
@@ -226,11 +281,15 @@ test: /\.(sa|sc|c)ss$/,
     {
       test: /\.(png|jpg|jpeg|gif|svg|webp|ico)$/i,
 type: 'asset/resource',
-},
+  },
 ]
----> npm run start (запускаем сервер) - npm run build (запускаем в продакшн режиме)
+```
+
+---> `npm run start` (запускаем сервер) - `npm run build` (запускаем в продакшн режиме)
 
 ---> в webpack.config.js:
+
+```
 module.exports = {
 mode: mode,
 output: {
@@ -238,143 +297,188 @@ assetModuleFilename: "assets/[hash][query]",
 },
 ...
 }
+```
 
----> npm run build
+---> `npm run build`
 
 ---> добавляем еще картинку
----> npm install --save-dev html-loader
+---> `npm install --save-dev html-loader`
 
 ---> добавляем в правила:
+
+```
 module.exports = {
-module: {
-rules: [
-{
-test: /\.html$/i,
-loader: "html-loader",
-},
-],
-},
+  module: {
+    rules: [
+      {
+        test: /\.html$/i,
+        loader: "html-loader",
+      },
+    ],
+  },
 };
+```
 
 ---> в добавляем изображение
 
----> npm run start
----> npm run build
+---> `npm run start`
+---> `npm run build`
 
-11. Очистка папки dist
+### 11. Очистка папки dist
 
+---
+
+```
 output: {
 assetModuleFlame: "assets/[hash][query]",
 clean: true, ---> добавляем
 },
----> npm run build
+```
 
-12. Подключение шрифтов
+---> `npm run build`
 
----> src/fonts/...
+### 12. Подключение шрифтов
 
----> styles/\_fonts.scss/
+---
 
----> в \_fonts.scss добавляем @font-face {...}
+---> `src/fonts/...`
+
+---> `styles/_fonts.scss/`
+
+---> в \_fonts.scss добавляем `@font-face {...}`
 
 ---> в index.scss:
-@use 'fonts';
+`@use 'fonts';`
 
 ---> в \_global.scss добавляем шрифт:
+
+```
 html {
 font-family: ;
 }
+```
 
 ---> в webpack.config.js добавляем регулярное выражение:
-rules: [
-{
-test: /\.(woff|woff2|eot|ttf|otf)$/i,
-type: 'asset/resource',
-},
-]
 
-13. Подключение шаблонизатора
+```
+rules: [
+  {
+    test: /\.(woff|woff2|eot|ttf|otf)$/i,
+    type: 'asset/resource',
+  },
+]
+```
+
+### 13. Подключение шаблонизатора
+
+---
 
 ---> подключаем плагин:
-npm install pug pug-loader --save-dev
+`npm install pug pug-loader --save-dev`
 
----> src/index.pug
+---> `src/index.pug`
 
 ---> конвертируем html-код в pug и добавляем его в файл index.pug
 
----> удаляем index.html
+---> удаляем `index.html`
 
----> создаем папку pug/libs
+---> создаем папку `pug/libs`
 
----> в libs создаем 2 файла: \_image.pug \_libs.pug
+---> в libs создаем 2 файла: `_image.pug` `_libs.pug`
 
----> в pug создаем файл \_head.pug и перенозсим в него код
+---> в pug создаем файл `_head.pug` и перенозсим в него код
 
----> в index.pug подключаем код head: include pug/\_head.pug
+---> в index.pug подключаем код head: `include pug/\_head.pug`
 
 ---> в \_image.pug создаем миксин для вставки изображения:
+
+```
 mixin image(name)
 img.src(src=`../src/images/${name}.jpg` alt=name)
+```
 
----> подключаем изображение в качестве библиотеки include pug/libs/\_libs в файл index.pug и добавляем код:
+---> подключаем изображение в качестве библиотеки `include pug/libs/_libs` в файл index.pug и добавляем код:
+
+```
 +image('zhivotnye_kot')
+```
 
 ---> в webpack.config.js:
+
+```
 {
-test: /\.pug$/,
-loader: 'pug-loader',
-exclude: /(node_modules|bower_components)/,
+  test: /\.pug$/,
+  loader: 'pug-loader',
+  exclude: /(node_modules|bower_components)/,
 },
+```
 
 ---> меняем html на pug
+
+```
 new HtmlWebpackPlugin({
 template: "./src/index.pug"
 }),
+```
 
----> npm run start (запускаем сервер)
+---> `npm run start` (запускаем сервер)
 
-14. Обработка JS
+### 14. Обработка JS
 
+---
+
+---> `npm install babel-loader @babel/core @babel/preset-env --save-dev`
 https://webpack.js.org/loaders/babel-loader/
----> npm install babel-loader @babel/core @babel/preset-env --save-dev
 
----> module: {
+--->
+
+```
+module: {
 rules: [
-{
-test: /\.(?:js|mjs|cjs)$/,
-exclude: /node_modules/,
-use: {
-loader: 'babel-loader',
-options: {
-targets: "defaults",
-presets: [
-['@babel/preset-env']
-]
+    {
+      test: /\.(?:js|mjs|cjs)$/,
+      exclude: /node_modules/,
+      use: {
+        loader: 'babel-loader',
+        options: {
+          targets: "defaults",
+          presets: [
+            ['@babel/preset-env']
+          ]
+        }
+      }
+    }
+  ]
 }
-}
-}
-]
-}
+```
 
----> компилируем проект npm r
+---> компилируем проект `npm run`
 
 ---> в package.json вставим: который может подстраивать наш код под нужные браузеры
+
+```
 "browserslist": [
 "defaults",
 "IE 10",
 "maintained node versions"
 ],
+```
 
 --> в \_global.scss добавим стили:
-&\_\_subtitle {
+
+```
+&__subtitle {
 ...
 display: flex;
 justify-content: center;
 }
+```
 
----> npm run start (запускаем сборку)
+---> `npm run start` (запускаем сборку)
 
 Добавьте target в webpack.config.js:
+
+```
 module.exports = {
 mode: mode,
 target: 'web', // ← ДОБАВЬТЕ ЭТУ СТРОКУ
@@ -384,68 +488,93 @@ output: {
 },
 // ... остальные настройки
 }
+```
 
----> output: {
+--->
+
+```
+output: {
 filename: '[name].[contenthash].js'
 },
+```
 
----> собираем проект npm run build
+---> собираем проект `npm run build`
 
-15. DEV-TOOL. Настройка исходных карт
+### 15. DEV-TOOL. Настройка исходных карт
 
----> добавляем devtool в module.exports = {
-mode: mode,//настраиваем режим сборки, код выше
-target: 'web',
-output: {...},
-devtool: 'source-map',
+---
+
+---> добавляем devtool в
+
+```
+module.exports = {
+  mode: mode,//настраиваем режим сборки, код выше
+  target: 'web',
+  output: {...},
+  devtool: 'source-map',
 }
+```
 
----> перезапускаем проект npm run start
+---> перезапускаем проект `npm run start`
 
-16. jQuery. Подключение библиотеки
+### 16. jQuery. Подключение библиотеки
 
----> npm i jquery
+---
+
+---> `npm i jquery`
 
 ---> пишем в index.js:
+
+```
 import $ from "jquery";
 (const $ = require("jquery"); // ← измените import на require)
+```
 
 ---> в index.pug добавляем див с классом: .block
 
 ---> пишем в index.js:
-$('.block').html('jQuery is working');
+`$('.block').html('jQuery is working');`
 
----> npm run start
+---> `npm run start`
 
-17. Bootstrap. Подключение библиотеки
+### 17. Bootstrap. Подключение библиотеки
 
----> npm i bootstrap
+---
+
+---> `npm i bootstrap`
 
 ---> устанавливаем
-npm i @popperjs/core
+`npm i @popperjs/core`
 
 ---> импортируем в index.js:
-@import 'bootstrap';
+`@import 'bootstrap';`
 
 ---> в index.scss:
-@import "~bootstrap/scss/bootstrap";
+`@import "~bootstrap/scss/bootstrap";`
 
 ---> в index.pug добавляем элемент бутстрапа
 
----> npm run start
+---> `npm run start`
 
-18. ENTRY POINTS. Импорт нескольких файлов
+### 18. ENTRY POINTS. Импорт нескольких файлов
+
+---
 
 ---> в index.pug добавляем див с классом: .user
 
 ---> добавляем файл в папку src/user.js
 
 ---> src/user.js добавляем следующий код:
+
+```
 import $ from "jquery";
 
 $('.user').html('User is working');
+```
 
 ---> в webpack.config.js добавим entry:
+
+```
 module.exports = {
 mode: mode,
 entry: {
@@ -454,12 +583,17 @@ user: './src/user.js',
 },
 ...
 }
+```
 
----> собираем проект: npm run build
+---> собираем проект: `npm run build`
 
-19. Оптимизация. Разделение файлов
+### 19. Оптимизация. Разделение файлов
+
+---
 
 ---> в webpack.config.js добавим optimization:
+
+```
 devtool: 'source-map',
 optimization: {
 splitChunks: {
@@ -467,5 +601,6 @@ chunks: 'all',
 },
 },
 plugins: [...]
+```
 
----> собираем проект: npm run build
+---> собираем проект: `npm run build`
